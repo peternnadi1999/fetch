@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fetch api sanbox</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            border:0;
+            font-family: sans-serif;
+        }
+        header{
+            background-color: blanchedalmond;
+            text-align: center;
+            padding: 30px;
+        }
+        .list{
+            background-color:white;
+            color: black;
+            border-radius: 10px;
+            box-shadow: 2px 2px 8px gray;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            width: 50%;
+           align-items: center;
+           margin-left: 25%;
+        }
+        .list ul li{
+            list-style-type: none;
+            padding: 5px;
+            font-size: 14px;
+            font-weight: bold;
+
+        }
+        #getusers{
+            color: white;
+            background-color: rgb(245, 9, 245);
+            border:2px solid white;
+            box-shadow: 2px 2px 8px gray;
+            border-radius: 8px;
+            padding: 10px;
+            margin-left: 30px;
+        }
+        .container{
+            background-color: burlywood;
+            margin-top:20px;
+            margin-left: 10px;
+            margin-right: 10px;
+            border: 2px solid white;
+            box-shadow: 2px 2px 8px gray;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+        <header style="color: rgb(201, 19, 19);">
+            <h2>Fetch Data from an api</h2>
+
+        </header>
+    <div class="container">
+        
+        <h1 style="text-align: center;font-size: 14px;padding-top:30px;  color: rgb(114, 25, 25); ">USERS DETAILS</h1>
+        <button id="getusers"> GETUSER</button>
+        <div id="user"></div>
+    </div>
+    <script>
+       document.getElementById('getusers').addEventListener('click', getusers);
+       function getusers(){
+           event.preventDefault();
+          fetch('https://reqres.in/api/users')
+          .then(responseData=> responseData.json())
+          .then(responseData => {
+            let output='';
+            responseData.data.map(user=> {
+                  
+                   output +=`
+
+                   <div class="list">
+                        <ul>
+                                <li>${user.id}.</li>
+                                <li><img  src=${user.avatar} alt="AVATAR" width="30" height="30"></li> 
+                                <li>Firstname:${user.first_name}</li>
+                                <li>Lastname:${user.last_name}</li>   
+                                <li>Email:${user.email}</li>
+                        </ul> 
+                
+                  </div> 
+                  `;
+                });
+              document.getElementById("user").innerHTML = output;
+          })
+          .catch((err) => console.log(err));
+       }
+    
+    </script>
+</body>
+</html>
